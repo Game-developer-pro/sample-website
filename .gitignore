@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+
+# Environment variables — NEVER commit these
+.env
+.env.local
+.env.production
+.env.*
+
+# Build output
+frontend/dist/
+frontend/dist-ssr/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# Misc seed / utility scripts (optional — remove if you want them in git)
+backend/seedAllQuestions.js
+backend/seedStage*.js
+backend/addHard*.js
+backend/addMedium*.js
+
+# Personal files accidentally in project root
+*.jpeg
+*.jpg
+*.png

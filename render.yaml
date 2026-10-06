@@ -1,0 +1,40 @@
+services:
+  # ── Backend (Node.js + Express + WebSocket) ───────────────────────────
+  - type: web
+    name: cbt-backend
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      # ── Paste your real values in the Render dashboard, NOT here ──
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: PAYSTACK_PUBLIC_KEY
+        sync: false
+      - key: PAYSTACK_SECRET_KEY
+        sync: false
+      - key: TEST_FEE_AMOUNT
+        value: 3000
+      - key: TEST_FEE_CURRENCY
+        value: NGN
+      # Set this to your Vercel frontend URL once deployed, e.g:
+      # https://your-app.vercel.app
+      - key: FRONTEND_URL
+        sync: false

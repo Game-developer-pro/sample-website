@@ -1,0 +1,467 @@
+/* ==== Unified UI Theme — Light Mode (White Background) ==== */
+
+/* ============================================================
+   CSS Custom Properties (Design Tokens)
+   ============================================================ */
+:root {
+  /* ---- Core Palette (HSL for use with hsl() and hsla()) ---- */
+  --primary:         185, 54%, 40%;   /* teal  → hsl(185,54%,40%) = #2F9E9D */
+  --secondary:       183, 43%, 62%;   /* light teal → #76C7C0 */
+  --warning:          38, 90%, 55%;   /* amber */
+  --danger:            0, 72%, 55%;   /* red   */
+  --success:         145, 60%, 40%;   /* green */
+
+  /* ---- Solid colour shortcuts (for properties that need #hex) ---- */
+  --color-primary:   #2F9E9D;
+  --color-secondary: #76C7C0;
+  --color-warning:   #E8A020;
+  --color-danger:    #D94040;
+  --color-success:   #28A060;
+
+  /* ---- Backgrounds ---- */
+  --bg-primary:     0, 0%, 100%;      /* pure white  */
+  --bg-secondary:   210, 20%, 97%;    /* very light blue-gray */
+  --bg-tertiary:    210, 16%, 93%;    /* slightly darker gray */
+
+  /* ---- Text ---- */
+  --text-main:       #1a1a2e;         /* near-black with blue tint */
+  --text-muted:      215, 15%, 48%;   /* medium gray-blue */
+  --text-inverse:    #ffffff;
+
+  /* ---- Borders ---- */
+  --border:          215, 20%, 87%;   /* soft blue-gray border */
+
+  /* ---- Typography ---- */
+  --font-display:   'Outfit', 'Plus Jakarta Sans', sans-serif;
+  --font-body:      'Plus Jakarta Sans', 'Outfit', sans-serif;
+
+  /* ---- Spacing & Shape ---- */
+  --radius-sm:       8px;
+  --radius-md:      12px;
+  --radius-lg:      16px;
+  --transition-smooth: 0.25s ease;
+
+  /* Legacy aliases (keep for compatibility) */
+  --border-radius:   var(--radius-md);
+  --text-inverse-legacy: #fff;
+}
+
+/* ============================================================
+   Global Background & Body
+   ============================================================ */
+body {
+  background: hsl(var(--bg-primary)) !important;
+  color: var(--text-main) !important;
+  margin: 0;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-main);
+}
+
+/* ============================================================
+   Links
+   ============================================================ */
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: var(--transition-smooth);
+}
+a:hover {
+  color: var(--color-secondary);
+}
+
+/* ============================================================
+   Navbar — Full Width Black Bar
+   ============================================================ */
+.glass-navbar {
+  width: 100%;
+  background: #0f172a;             /* deep navy-black */
+  color: #fff;
+  min-height: 70px;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid rgba(47, 158, 157, 0.3);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+}
+
+.glass-navbar .nav-container {
+  max-width: none;
+  margin: 0;
+  width: 100%;
+  background: transparent;
+  border-bottom: none;
+  min-height: unset;
+  padding: 0;
+}
+
+/* Override any conflicting nav-container definition */
+.nav-container {
+  background: transparent;
+  color: inherit;
+  min-height: 70px;
+  padding: 0 0;
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+/* ---- Nav Links ---- */
+.nav-item {
+  color: rgba(255, 255, 255, 0.82) !important;
+  font-weight: 500;
+  margin-right: 1rem;
+  cursor: pointer;
+  position: relative;
+  padding: 0.3rem 0;
+  transition: color var(--transition-smooth);
+}
+.nav-item:hover,
+.nav-item.active {
+  color: var(--color-primary) !important;
+  text-decoration: none;
+}
+.nav-item::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--color-primary);
+  transition: width var(--transition-smooth);
+}
+.nav-item:hover::after,
+.nav-item.active::after {
+  width: 100%;
+}
+
+/* ---- Brand / Logo ---- */
+.nav-brand-glow {
+  color: #ffffff !important;
+  font-weight: 800;
+  font-size: 1.45rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-shadow: 0 0 12px rgba(47, 158, 157, 0.5);
+  transition: opacity var(--transition-smooth);
+}
+.nav-brand-glow:hover {
+  opacity: 0.9;
+  color: #fff !important;
+}
+
+/* ---- Nav CTA Button ---- */
+.btn-nav-primary {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  color: #fff !important;
+  font-weight: 600;
+  padding: 0.5rem 1.2rem;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 4px 12px rgba(47, 158, 157, 0.35);
+  transition: var(--transition-smooth);
+}
+.btn-nav-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(47, 158, 157, 0.5);
+  color: #fff !important;
+}
+
+/* ---- User Avatar ---- */
+.user-avatar {
+  color: #fff !important;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+}
+
+/* ---- Admin Badge ---- */
+.admin-badge {
+  background: rgba(232, 160, 32, 0.15);
+  color: var(--color-warning) !important;
+  border: 1px solid rgba(232, 160, 32, 0.35);
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+}
+
+/* ============================================================
+   Cards & Containers
+   ============================================================ */
+.glass-card,
+.card,
+.exam-card,
+.admin-wrapper,
+.admin-container {
+  background: hsl(var(--bg-secondary)) !important;
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--border-radius) !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  color: var(--text-main) !important;
+}
+
+/* Welcome banner keeps gradient feel */
+.welcome-banner {
+  background: linear-gradient(135deg, hsl(var(--bg-secondary)), hsl(var(--bg-tertiary))) !important;
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--border-radius) !important;
+  color: var(--text-main) !important;
+}
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+.custom-btn,
+.badge-category,
+.progress-summary,
+.timer-widget-card,
+.admin-actions-row .btn-admin-submit,
+.btn-dashboard-primary,
+.btn-auth-submit,
+.btn-exam-submit,
+.btn-sidebar-submit,
+.btn-results-primary,
+.btn-nav-primary,
+.btn-start-exam {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  color: #fff !important;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+}
+
+.custom-btn:hover,
+.btn-dashboard-primary:hover,
+.btn-auth-submit:hover,
+.btn-exam-submit:hover,
+.btn-sidebar-submit:hover,
+.btn-results-primary:hover,
+.btn-nav-primary:hover,
+.btn-start-exam:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+.btn-dashboard-secondary {
+  background: hsl(var(--bg-tertiary));
+  color: var(--text-main) !important;
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  transition: var(--transition-smooth);
+}
+.btn-dashboard-secondary:hover {
+  background: hsl(var(--border));
+}
+
+/* ============================================================
+   Form Inputs — ensure dark text on white background
+   ============================================================ */
+input, textarea, select {
+  color: var(--text-main) !important;
+  background: hsl(var(--bg-primary)) !important;
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius-sm);
+}
+input::placeholder, textarea::placeholder {
+  color: hsl(var(--text-muted)) !important;
+  opacity: 0.7;
+}
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(47, 158, 157, 0.2);
+}
+
+/* ============================================================
+   Tables
+   ============================================================ */
+.premium-table {
+  background: hsl(var(--bg-secondary));
+  color: var(--text-main);
+}
+.premium-table th {
+  background: var(--color-primary);
+  color: #ffffff;
+  border-bottom: none;
+}
+.premium-table td {
+  color: var(--text-main);
+  border-bottom: 1px solid hsl(var(--border));
+}
+.premium-table tbody tr:hover {
+  background: rgba(47, 158, 157, 0.06);
+}
+
+/* ============================================================
+   Stat Cards & Dashboard Elements
+   ============================================================ */
+.stat-card {
+  background: hsl(var(--bg-secondary));
+  border: 1px solid hsl(var(--border));
+  color: var(--text-main);
+}
+.stat-details h3 {
+  color: var(--text-main);
+}
+.stat-details p {
+  color: hsl(var(--text-muted));
+}
+
+/* ============================================================
+   Question / Exam UI
+   ============================================================ */
+.question-text {
+  color: var(--text-main);
+}
+.question-index {
+  color: hsl(var(--text-muted));
+}
+.option-btn {
+  background: hsl(var(--bg-primary));
+  border: 2px solid hsl(var(--border));
+  color: var(--text-main);
+  border-radius: var(--radius-sm);
+  transition: var(--transition-smooth);
+}
+.option-btn:hover {
+  border-color: var(--color-primary);
+  background: rgba(47, 158, 157, 0.06);
+}
+.option-btn.selected {
+  border-color: var(--color-primary);
+  background: rgba(47, 158, 157, 0.12);
+  color: var(--text-main);
+}
+
+/* ============================================================
+   Auth Pages
+   ============================================================ */
+.auth-title {
+  background: linear-gradient(135deg, #0f172a 30%, var(--color-primary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.auth-subtitle {
+  color: hsl(var(--text-muted));
+}
+.auth-card {
+  background: hsl(var(--bg-secondary));
+  border: 1px solid hsl(var(--border));
+  color: var(--text-main);
+}
+.role-btn {
+  background: hsl(var(--bg-tertiary));
+  color: hsl(var(--text-muted));
+  border: 1px solid hsl(var(--border));
+}
+.role-btn.active {
+  background: rgba(47, 158, 157, 0.1);
+  color: var(--text-main);
+  border-color: var(--color-primary);
+}
+.form-group label {
+  color: hsl(var(--text-muted));
+}
+
+/* ============================================================
+   Dropdown (User Info)
+   ============================================================ */
+.user-info-dropdown {
+  background: hsl(var(--bg-secondary));
+  border: 1px solid hsl(var(--border));
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+.user-info-name {
+  color: var(--text-main);
+}
+.user-info-role {
+  color: hsl(var(--text-muted));
+}
+
+/* ============================================================
+   Miscellaneous
+   ============================================================ */
+button {
+  border-radius: var(--radius-sm);
+}
+.glass-glow-card {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+.no-data-msg {
+  color: hsl(var(--text-muted));
+  background: hsl(var(--bg-secondary));
+  border: 1px dashed hsl(var(--border));
+}
+
+/* ---- Status text ---- */
+.pass-text  { color: var(--color-success); font-weight: 600; }
+.fail-text  { color: var(--color-danger);  font-weight: 600; }
+
+/* ---- Error / success alerts ---- */
+.error-alert {
+  background: rgba(217, 64, 64, 0.08);
+  border: 1px solid rgba(217, 64, 64, 0.25);
+  color: var(--color-danger);
+}
+.success-alert {
+  background: rgba(40, 160, 96, 0.08);
+  border: 1px solid rgba(40, 160, 96, 0.25);
+  color: var(--color-success);
+}
+
+/* ---- Timer widget ---- */
+.timer-widget-card {
+  background: hsl(var(--bg-secondary)) !important;
+  color: var(--text-main) !important;
+  border: 1px solid hsl(var(--border));
+}
+
+/* ---- Exam progress bar ---- */
+.exam-progress-bar {
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+}
+.exam-progress-bar-container {
+  background: hsl(var(--bg-tertiary));
+}
+
+/* ---- Logout button in dropdown ---- */
+.btn-logout-dropdown {
+  background: rgba(217, 64, 64, 0.08);
+  color: var(--color-danger);
+  border: 1px solid rgba(217, 64, 64, 0.2);
+}
+.btn-logout-dropdown:hover {
+  background: var(--color-danger);
+  color: #fff;
+}
+
+/* ---- Welcome banner text fix ---- */
+.welcome-text h1,
+.welcome-text h2,
+.welcome-text p {
+  color: var(--text-main);
+}
+.user-role-tag {
+  background: rgba(47, 158, 157, 0.1);
+  border: 1px solid rgba(47, 158, 157, 0.3);
+  color: var(--color-primary);
+}
+
+/* ---- Dashboard action card text ---- */
+.action-card h2,
+.action-card p {
+  color: var(--text-main);
+}
+.action-card p {
+  color: hsl(var(--text-muted));
+}
