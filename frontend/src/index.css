@@ -3598,3 +3598,143 @@ button {
   }
 }
 
+/* ============================================================
+   3. Comprehensive Mobile Readability & Anti-Cramping Fixes
+   ============================================================ */
+@media (max-width: 640px) {
+  /* Prevent awkward mid-word breaks and excessive text hyphenation */
+  body, p, span, h1, h2, h3, h4, h5, h6, a, button {
+    overflow-wrap: break-word;
+    word-break: normal;
+  }
+
+  /* --- Dashboard Mobile Improvements --- */
+  .dashboard-wrapper {
+    padding: 1rem 0.75rem !important;
+  }
+
+  .welcome-banner {
+    padding: 1.25rem 1rem !important;
+    border-radius: var(--radius-md) !important;
+  }
+
+  .welcome-text h1 {
+    font-size: 1.45rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .welcome-text p {
+    font-size: 0.88rem !important;
+    line-height: 1.4 !important;
+  }
+
+  /* Stat cards on mobile */
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem !important;
+  }
+
+  .stat-card {
+    padding: 1.1rem 1rem !important;
+  }
+
+  .stat-details h3 {
+    font-size: 1.5rem !important;
+  }
+
+  .stat-details p {
+    font-size: 0.78rem !important;
+    letter-spacing: 0.03em !important;
+  }
+
+  .action-card {
+    padding: 1.25rem 1rem !important;
+  }
+
+  .action-card h2 {
+    font-size: 1.35rem !important;
+  }
+
+  .action-card p {
+    font-size: 0.88rem !important;
+    line-height: 1.45 !important;
+  }
+
+  /* Latest update widget */
+  .latest-announcement-widget {
+    padding: 1rem !important;
+  }
+
+  /* --- Results Page Mobile Improvements --- */
+  .results-wrapper {
+    padding: 1rem 0.75rem !important;
+  }
+
+  .latest-result-card {
+    padding: 1.25rem 1rem !important;
+  }
+
+  .result-details-text h2 {
+    font-size: 1.35rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .result-details-text p {
+    font-size: 0.82rem !important;
+    margin-bottom: 0.8rem !important;
+  }
+
+  .big-percentage {
+    font-size: 1.85rem !important;
+  }
+
+  .score-radial-progress {
+    width: 130px !important;
+    height: 130px !important;
+  }
+
+  .celebration-badge {
+    font-size: 0.75rem !important;
+    padding: 0.25rem 0.6rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .badge-pass, .badge-fail {
+    font-size: 0.85rem !important;
+    padding: 0.3rem 0.9rem !important;
+  }
+
+  .result-actions-row {
+    gap: 0.6rem !important;
+  }
+
+  .btn-results-primary,
+  .btn-results-secondary {
+    padding: 0.65rem 1rem !important;
+    font-size: 0.9rem !important;
+  }
+
+  /* Tables: smooth horizontal scroll container with clear padding */
+  .table-responsive {
+    margin: 0 -0.5rem;
+    padding: 0 0.5rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .premium-table th, 
+  .premium-table td {
+    padding: 0.65rem 0.5rem !important;
+    font-size: 0.8rem !important;
+    white-space: nowrap;
+  }
+
+  /* --- Payment Page Mobile Improvements --- */
+  .payment-container {
+    padding: 1rem 0.5rem !important;
+  }
+
+  /* Auto detected currency section on mobile */
+  #currency-input {
+    width: 90px !important;
+  }
+}

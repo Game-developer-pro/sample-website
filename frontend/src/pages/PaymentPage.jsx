@@ -178,14 +178,14 @@ const PaymentPage = () => {
   }
 
   return (
-    <div style={{ maxWidth: "760px", margin: "3rem auto", padding: "0 1.5rem" }}>
+    <div className="payment-wrapper" style={{ maxWidth: "760px", margin: "2rem auto", padding: "0 1rem" }}>
       <div
-        className="glass-card"
+        className="glass-card payment-card"
         style={{
           background: "hsl(var(--bg-secondary))",
           border: "1px solid hsl(var(--border))",
           borderRadius: "16px",
-          padding: "2.5rem 2rem",
+          padding: "clamp(1.25rem, 4vw, 2.5rem)",
           boxShadow: "0 12px 40px rgba(0, 0, 0, 0.08)",
         }}
       >
