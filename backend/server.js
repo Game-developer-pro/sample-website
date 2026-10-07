@@ -147,15 +147,25 @@ export function getPeakOnlineCount() {
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:4173",
-  process.env.FRONTEND_URL,
+  ...(process.env.FRONTEND_URL ? process.env.FRONTEND_URL.split(",").map(url => url.trim().replace(/\/$/, "")) : [])
 ].filter(Boolean);
 
 app.use(cors({
   origin: (origin, callback) => {
     // Allow requests with no origin (mobile apps, curl, Postman)
-    if (!origin || allowedOrigins.includes(origin)) {
+    if (!origin) {
+      return callback(null, true);
+    }
+    
+    const cleanOrigin = origin.replace(/\/$/, "");
+    const isAllowed = allowedOrigins.includes(cleanOrigin) ||
+      cleanOrigin.endsWith(".vercel.app") ||
+      cleanOrigin === "https://exam-quest-frontend.vercel.app";
+
+    if (isAllowed) {
       callback(null, true);
     } else {
+      console.warn(`[CORS Blocked] Origin: ${origin}. Allowed origins:`, allowedOrigins);
       callback(new Error(`CORS: origin '${origin}' not allowed`));
     }
   },
