@@ -3,9 +3,12 @@ import axios from "axios";
 
 export const AuthContext = createContext();
 
-const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+// Normalize BASE_URL so it always points to .../api even if set without it in Vercel
+const rawApiUrl = (import.meta.env.VITE_API_URL || "http://localhost:5000/api").replace(/\/$/, "");
+const BASE_URL = rawApiUrl.endsWith("/api") ? rawApiUrl : `${rawApiUrl}/api`;
+
 // In production (https), WebSocket must use wss://; in dev (http) use ws://
-const WS_URL = BASE_URL.replace(/^https/, "wss").replace(/^http/, "ws").replace("/api", "");
+const WS_URL = BASE_URL.replace(/^https/, "wss").replace(/^http/, "ws").replace(/\/api$/, "");
 
 // Create configured axios instance
 export const api = axios.create({
