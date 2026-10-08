@@ -126,24 +126,40 @@ const RegisterPage = () => {
         {error && <div className="error-alert">{error}</div>}
         {success && <div className="success-alert">{success}</div>}
 
-        {/* Custom styled Google Sign-Up button */}
-        <button
-          type="button"
-          className="btn-google"
-          onClick={handleCustomGoogleClick}
-          disabled={!clientId || googleLoading || loading}
-          title={!clientId ? "Configure VITE_GOOGLE_CLIENT_ID in frontend/.env to enable" : "Sign up with Google"}
-        >
-          {googleLoading ? (
-            <span className="google-btn-spinner" />
-          ) : (
-            <GoogleIcon />
-          )}
-          <span>{googleLoading ? "Signing up with Google..." : "Continue with Google"}</span>
-        </button>
+        {/* Google Sign-Up button container */}
+        <div style={{ position: "relative", width: "100%", marginBottom: "0.25rem" }}>
+          {/* Visible custom button */}
+          <div
+            className="btn-google"
+            style={{
+              pointerEvents: "none",
+              margin: 0,
+            }}
+          >
+            {googleLoading ? (
+              <span className="google-btn-spinner" />
+            ) : (
+              <GoogleIcon />
+            )}
+            <span>{googleLoading ? "Signing up with Google..." : "Continue with Google"}</span>
+          </div>
 
-        {/* Hidden container for GIS button trigger */}
-        <div id="google-hidden-register-btn" style={{ position: "absolute", opacity: 0, pointerEvents: "none", zIndex: -1, width: 0, height: 0, overflow: "hidden" }} />
+          {/* Official Google button overlaid with transparent opacity for 100% reliable click capture */}
+          <div
+            id="google-hidden-register-btn"
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              opacity: 0.001,
+              zIndex: 10,
+              cursor: "pointer",
+              overflow: "hidden",
+            }}
+          />
+        </div>
 
         <div className="auth-divider">or register with email</div>
 

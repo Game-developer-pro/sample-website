@@ -236,9 +236,11 @@ button {
   transform: translateY(10px);
   transition: var(--transition-smooth);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  z-index: 1002;
 }
 
-.user-profile:hover .user-info-dropdown {
+.user-profile:hover .user-info-dropdown,
+.user-info-dropdown.dropdown-visible {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);

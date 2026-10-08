@@ -30,14 +30,16 @@ const Navbar = () => {
   const isActive = (path) => location.pathname === path;
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  // Close mobile menu on route change
+  // Close menus on route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
+    setIsProfileDropdownOpen(false);
   }, [location.pathname]);
 
   return (
@@ -118,16 +120,34 @@ const Navbar = () => {
                 </Link>
               )}
               <div className="user-profile">
-                <span className="user-avatar" onClick={() => navigate("/profile")} style={{ cursor: "pointer" }}>
+                <span
+                  className="user-avatar"
+                  onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
+                  style={{ cursor: "pointer" }}
+                  title="Account menu"
+                >
                   {user.name ? user.name[0].toUpperCase() : "U"}
                 </span>
-                <div className="user-info-dropdown">
+                <div className={`user-info-dropdown ${isProfileDropdownOpen ? "dropdown-visible" : ""}`}>
                   <div className="user-info-name">{user.name || "User"}</div>
                   <div className="user-info-role">{user.role}</div>
-                  <button onClick={() => navigate("/profile")} className="btn-logout-dropdown" style={{ marginBottom: "5px", backgroundColor: "#0a06be", color: "#fff" }}>
+                  <button
+                    onClick={() => {
+                      setIsProfileDropdownOpen(false);
+                      navigate("/profile");
+                    }}
+                    className="btn-logout-dropdown"
+                    style={{ marginBottom: "5px", backgroundColor: "#0a06be", color: "#fff" }}
+                  >
                     View Profile
                   </button>
-                  <button onClick={handleLogout} className="btn-logout-dropdown">
+                  <button
+                    onClick={() => {
+                      setIsProfileDropdownOpen(false);
+                      handleLogout();
+                    }}
+                    className="btn-logout-dropdown"
+                  >
                     Sign Out
                   </button>
                 </div>
