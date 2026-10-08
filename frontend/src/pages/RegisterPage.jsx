@@ -185,7 +185,7 @@ const RegisterPage = () => {
                 onChange={(e) => setUsername(e.target.value.replace(/[^a-zA-Z0-9_]/g, ""))}
                 placeholder="e.g. jamb_king99"
                 maxLength={24}
-                style={{ paddingLeft: "1.8rem" }}
+                style={{ paddingLeft: "2.2rem", width: "100%" }}
               />
             </div>
             <small style={{ color: "hsl(var(--text-muted))", fontSize: "0.78rem" }}>3–24 chars. Letters, numbers, underscores only.</small>

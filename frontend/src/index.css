@@ -143,7 +143,7 @@ button {
 .nav-item {
   color: hsl(var(--text-muted));
   font-weight: 500;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   position: relative;
   padding: 0.3rem 0;
 }
@@ -237,6 +237,24 @@ button {
   transition: var(--transition-smooth);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
   z-index: 1002;
+}
+
+@media (max-width: 768px) {
+  .user-info-dropdown {
+    position: static;
+    width: 100%;
+    box-shadow: none;
+    border: none;
+    background: transparent;
+    padding: 0.5rem 0;
+    transform: translateY(0);
+    margin-top: 10px;
+    display: none;
+  }
+  
+  .user-info-dropdown.dropdown-visible {
+    display: block;
+  }
 }
 
 .user-profile:hover .user-info-dropdown,
@@ -592,6 +610,12 @@ button {
 .welcome-text h1 {
   font-size: 2.2rem;
   margin-bottom: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .welcome-text h1 {
+    font-size: 1.5rem;
+  }
 }
 
 .welcome-text p {
@@ -3738,5 +3762,19 @@ button {
   /* Auto detected currency section on mobile */
   #currency-input {
     width: 90px !important;
+  }
+  
+  /* --- Additional Typography Fixes for Dashboard and Results (Anti-overlap) --- */
+  .stat-details h3 {
+    font-size: 1.5rem !important;
+  }
+  .stat-details p {
+    font-size: 0.75rem !important;
+  }
+  .action-card h2 {
+    font-size: 1.3rem !important;
+  }
+  .action-card p {
+    font-size: 0.85rem !important;
   }
 }
