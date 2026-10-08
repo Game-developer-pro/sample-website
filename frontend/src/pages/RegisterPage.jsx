@@ -48,14 +48,16 @@ const RegisterPage = () => {
     if (!clientId) return; // silently skip if not configured
 
     const initGoogle = () => {
-      if (!window.google?.accounts?.id) return;
       window.google.accounts.id.initialize({
         client_id: clientId,
         callback: handleGoogleCredential,
+        use_fedcm_for_prompt: false,
+        auto_select: false,
       });
 
       const hiddenBtn = document.getElementById("google-hidden-register-btn");
       if (hiddenBtn) {
+        hiddenBtn.innerHTML = "";
         window.google.accounts.id.renderButton(hiddenBtn, {
           type: "standard",
           theme: "outline",

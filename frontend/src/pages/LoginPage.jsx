@@ -50,11 +50,14 @@ const LoginPage = () => {
       window.google.accounts.id.initialize({
         client_id: clientId,
         callback: handleGoogleCredential,
+        use_fedcm_for_prompt: false,
+        auto_select: false,
       });
 
-      // Also render a hidden standard button in a hidden element to ensure user gesture click handling
+      // Render standard button into hidden container for reliable fallback
       const hiddenBtn = document.getElementById("google-hidden-btn");
       if (hiddenBtn) {
+        hiddenBtn.innerHTML = "";
         window.google.accounts.id.renderButton(hiddenBtn, {
           type: "standard",
           theme: "outline",

@@ -99,7 +99,8 @@ const CorrectionsPage = () => {
       subject: corr.subject || "",
     });
 
-    const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+    const rawApiUrl = (import.meta.env.VITE_API_URL || "http://localhost:5000/api").replace(/\/$/, "");
+    const BASE_URL = rawApiUrl.endsWith("/api") ? rawApiUrl : `${rawApiUrl}/api`;
 
     try {
       const res = await fetch(`${BASE_URL}/ai/explain-stream?${params}`, {
