@@ -1,5 +1,5 @@
 import express from "express";
-import { explainQuestion, explainQuestionStream } from "../controllers/aiController.js";
+import { explainQuestion, explainQuestionStream, chatWithAssistant } from "../controllers/aiController.js";
 import { authenticateToken as protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
@@ -10,4 +10,8 @@ router.get("/explain-stream", protect, explainQuestionStream);
 // Non-streaming fallback (kept for backwards compatibility)
 router.post("/explain", protect, explainQuestion);
 
+// General help-chat endpoint (used by the ChatWidget)
+router.post("/chat", protect, chatWithAssistant);
+
 export default router;
+

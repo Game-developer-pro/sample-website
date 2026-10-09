@@ -219,3 +219,84 @@ export const explainQuestion = async (req, res) => {
     res.status(500).json({ message: "An unexpected error occurred. Please try again." });
   }
 };
+
+// @desc    General-purpose help chat with streaming SSE
+// @route   POST /api/ai/chat
+// @access  Private
+export const chatWithAssistant = async (req, res) => {
+  const { messages } = req.body; // array of { role: "user"|"model", parts: [{ text }] }
+
+  if (!Array.isArray(messages) || messages.length === 0) {
+    return res.status(400).json({ message: "messages array is required" });
+  }
+
+  const systemPrompt = `You are the friendly built-in help assistant for Exam Quest, a Nigerian student exam preparation platform for WAEC, NECO, and JAMB exams.
+
+Your role is to:
+- Help users navigate the Exam Quest platform (Dashboard, Questions, Results, Corrections, Leaderboard, News Feed, Practicals, Profile, Payment/Subscription, Feedback, Games).
+- Answer exam-related questions about subjects like Mathematics, English, Physics, Chemistry, Biology, Economics, Government, Literature, etc.
+- Explain topics, formulas, and concepts students struggle with.
+- Guide admins on managing feedback, questions, and user data.
+- Be encouraging, concise, and exam-focused.
+
+If a question is completely unrelated to education or the platform, politely redirect the conversation.
+Always respond in clear, friendly English. Use markdown formatting (bold, bullet lists) when it improves clarity.`;
+
+  // SSE headers
+  res.setHeader("Content-Type", "text/event-stream");
+  res.setHeader("Cache-Control", "no-cache");
+  res.setHeader("Connection", "keep-alive");
+  res.setHeader("X-Accel-Buffering", "no");
+  res.flushHeaders();
+
+  const sendChunk = (data) => res.write(`data: ${JSON.stringify(data)}\n\n`);
+
+  // Build Gemini chat history (all but the last user message)
+  const history = messages.slice(0, -1).map((m) => ({
+    role: m.role,
+    parts: m.parts,
+  }));
+  const lastMsg = messages[messages.length - 1];
+
+  let streamSuccess = false;
+  let lastError = null;
+  const totalKeys = getApiKeys().length || 1;
+
+  for (const modelName of MODEL_CANDIDATES) {
+    if (streamSuccess) break;
+    for (let k = 0; k < totalKeys; k++) {
+      try {
+        const genAI = getGenAIInstance();
+        const model = genAI.getGenerativeModel({
+          model: modelName,
+          systemInstruction: systemPrompt,
+          generationConfig: { maxOutputTokens: 1024 },
+        });
+
+        const chat = model.startChat({ history });
+        const streamResult = await chat.sendMessageStream(lastMsg.parts[0].text);
+
+        for await (const chunk of streamResult.stream) {
+          const text = chunk.text();
+          if (text) sendChunk({ chunk: text, done: false });
+        }
+
+        sendChunk({ done: true });
+        res.end();
+        streamSuccess = true;
+        break;
+      } catch (err) {
+        console.warn(`[Chat] Model ${modelName} key #${currentKeyIndex + 1} failed:`, err.message);
+        rotateApiKey();
+        lastError = err;
+      }
+    }
+  }
+
+  if (!streamSuccess) {
+    console.error("[Chat] All attempts failed:", lastError);
+    sendChunk({ error: "AI service is temporarily unavailable. Please try again shortly.", done: true });
+    res.end();
+  }
+};
+
