@@ -132,7 +132,10 @@ const ChatWidget = () => {
     setMessages((prev) => [...prev, { role: "model", parts: [{ text: "" }], streaming: true }]);
 
     try {
-      const response = await fetch(`${BASE_URL}/ai/chat`, {
+      // Derive the endpoint from the already-normalised axios base URL
+      // (avoids re-parsing VITE_API_URL and missing the /api segment in prod)
+      const chatUrl = `${api.defaults.baseURL}/ai/chat`;
+      const response = await fetch(chatUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
