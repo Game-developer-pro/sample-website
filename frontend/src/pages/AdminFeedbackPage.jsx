@@ -155,7 +155,7 @@ const AdminFeedbackPage = () => {
         <div className="header-left">
           <Link to="/admin" className="back-link">← Back to Admin Console</Link>
           <h1 className="admin-title">
-            📥 User Feedback & Support Inbox
+             User Feedback & Support Inbox
             {unreadCount > 0 && <span className="unread-counter">{unreadCount} New</span>}
           </h1>
           <p className="admin-subtitle">
@@ -262,7 +262,7 @@ const AdminFeedbackPage = () => {
                   <div className="ticket-meta-tags">
                     <span className="category-pill">{selectedFeedback.category}</span>
                     {getStatusBadge(selectedFeedback.status)}
-                    <span className="ticket-user-email">📧 {selectedFeedback.user?.email}</span>
+                    <span className="ticket-user-email"> {selectedFeedback.user?.email}</span>
                   </div>
                   <h2 className="selected-subject">{selectedFeedback.subject}</h2>
                 </div>
@@ -335,13 +335,12 @@ const AdminFeedbackPage = () => {
                   className="btn-admin-reply"
                   disabled={sendingReply || !replyText.trim()}
                 >
-                  {sendingReply ? "Sending..." : "Reply as Admin 💬"}
+                  {sendingReply ? "Sending..." : "Reply as Admin"}
                 </button>
               </form>
             </>
           ) : (
             <div className="admin-no-selection">
-              <div className="no-selection-icon">📬</div>
               <h3>No Feedback Ticket Selected</h3>
               <p>Select a ticket from the inbox on the left to view messages and reply to students.</p>
             </div>
