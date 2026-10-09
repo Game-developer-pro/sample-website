@@ -1,79 +1,11 @@
 // ChatWidget.jsx – fully-featured help & chat widget powered by Gemini AI (streaming SSE)
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { AuthContext, api } from "../context/AuthContext";
+import ReactMarkdown from "react-markdown";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
+import "katex/dist/katex.min.css";
 import "./ChatWidget.css";
-
-// --- Minimal markdown renderer (bold, code, bullets) ---
-function renderMarkdown(text) {
-  const lines = text.split("\n");
-  const out = [];
-  let i = 0;
-
-  while (i < lines.length) {
-    const line = lines[i];
-
-    // Bullet list
-    if (/^[-*•]\s/.test(line)) {
-      const items = [];
-      while (i < lines.length && /^[-*•]\s/.test(lines[i])) {
-        items.push(lines[i].replace(/^[-*•]\s/, ""));
-        i++;
-      }
-      out.push(
-        <ul key={`ul-${i}`} style={{ margin: "0.4rem 0 0.4rem 1.1rem", padding: 0 }}>
-          {items.map((it, j) => (
-            <li key={j} style={{ marginBottom: "0.2rem" }} dangerouslySetInnerHTML={{ __html: inlineFormat(it) }} />
-          ))}
-        </ul>
-      );
-      continue;
-    }
-
-    // Numbered list
-    if (/^\d+\.\s/.test(line)) {
-      const items = [];
-      while (i < lines.length && /^\d+\.\s/.test(lines[i])) {
-        items.push(lines[i].replace(/^\d+\.\s/, ""));
-        i++;
-      }
-      out.push(
-        <ol key={`ol-${i}`} style={{ margin: "0.4rem 0 0.4rem 1.1rem", padding: 0 }}>
-          {items.map((it, j) => (
-            <li key={j} style={{ marginBottom: "0.2rem" }} dangerouslySetInnerHTML={{ __html: inlineFormat(it) }} />
-          ))}
-        </ol>
-      );
-      continue;
-    }
-
-    // Heading
-    if (/^#{1,3}\s/.test(line)) {
-      const text2 = line.replace(/^#{1,3}\s/, "");
-      out.push(<p key={i} style={{ fontWeight: 700, margin: "0.5rem 0 0.2rem" }} dangerouslySetInnerHTML={{ __html: inlineFormat(text2) }} />);
-      i++;
-      continue;
-    }
-
-    // Empty line → spacing
-    if (line.trim() === "") {
-      out.push(<div key={i} style={{ height: "0.35rem" }} />);
-      i++;
-      continue;
-    }
-
-    out.push(<p key={i} style={{ margin: "0.25rem 0" }} dangerouslySetInnerHTML={{ __html: inlineFormat(line) }} />);
-    i++;
-  }
-
-  return <>{out}</>;
-}
-
-function inlineFormat(text) {
-  return text
-    .replace(/`([^`]+)`/g, "<code style='background:rgba(0,0,0,0.08);border-radius:3px;padding:1px 4px;font-size:0.88em'>$1</code>")
-    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
-    .replace(/\*(.+?)\*/g, "<em>$1</em>");
-}
 
 // Quick-action suggestion chips shown before first message
 const QUICK_CHIPS = [
@@ -291,7 +223,11 @@ const ChatWidget = () => {
                           <span /><span /><span />
                         </span>
                       ) : (
-                        <div className="cw-markdown">{renderMarkdown(text)}</div>
+                        <div className="cw-markdown markdown-body">
+                          <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>
+                            {text}
+                          </ReactMarkdown>
+                        </div>
                       )}
                       {msg.streaming && text !== "" && (
                         <span className="cw-cursor" aria-hidden="true">▋</span>
