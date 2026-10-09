@@ -1,6 +1,6 @@
 import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
+import ChatWidget from "./components/ChatWidget";
 import { AuthProvider } from "./context/AuthContext";
 
 // Lazy-loaded route components for fast startup & low memory consumption on budget devices
@@ -50,6 +50,7 @@ function App() {
     <AuthProvider>
       <Router>
         <Navbar />
+        <ChatWidget />
         <Suspense fallback={<PageLoader />}>
           <Routes>
             <Route path="/" element={<LoginPage />} />
