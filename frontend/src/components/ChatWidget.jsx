@@ -236,10 +236,9 @@ const ChatWidget = () => {
           {/* Header */}
           <div className="cw-header">
             <div className="cw-header-info">
-              <div className="cw-avatar">✦</div>
               <div>
                 <div className="cw-header-title">Exam Quest Assistant</div>
-                <div className="cw-header-sub">Powered by Gemini AI · Always here to help</div>
+                <div className="cw-header-sub">Always here to help</div>
               </div>
             </div>
             <div className="cw-header-actions">
