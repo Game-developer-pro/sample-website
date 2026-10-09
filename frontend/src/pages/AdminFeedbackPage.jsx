@@ -352,9 +352,9 @@ const AdminFeedbackPage = () => {
       {/* Admin Feedback Styling */}
       <style>{`
         .admin-feedback-page {
-          max-width: 1350px;
+          max-width: 1600px;
           margin: 1.5rem auto 3rem auto;
-          padding: 0 1.25rem;
+          padding: 0 1.5rem;
           font-family: var(--font-body, inherit);
         }
         .admin-feedback-header {
@@ -442,18 +442,39 @@ const AdminFeedbackPage = () => {
         }
         .admin-feedback-grid {
           display: grid;
-          grid-template-columns: 380px 1fr;
+          grid-template-columns: 420px 1fr;
           gap: 1.25rem;
-          min-height: 620px;
+          min-height: 680px;
           background: #fff;
           border-radius: var(--radius-lg, 16px);
           border: 1px solid hsl(var(--border, 215, 20%, 87%));
           box-shadow: 0 8px 24px rgba(0,0,0,0.04);
           overflow: hidden;
         }
-        @media (max-width: 900px) {
+        @media (max-width: 960px) {
+          .admin-feedback-page {
+            padding: 0 0.75rem;
+          }
           .admin-feedback-grid {
             grid-template-columns: 1fr;
+          }
+          .admin-filter-toolbar {
+            flex-direction: column;
+            align-items: stretch;
+          }
+          .status-tabs {
+            flex-wrap: wrap;
+          }
+          .admin-search-input {
+            width: 100%;
+          }
+          .admin-chat-header {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+          .ticket-actions {
+            width: 100%;
+            justify-content: flex-start;
           }
         }
         .admin-tickets-sidebar {
@@ -620,17 +641,37 @@ const AdminFeedbackPage = () => {
         }
         .admin-messages-list {
           flex: 1;
-          padding: 1.5rem;
+          padding: 1.5rem 2rem;
           overflow-y: auto;
           display: flex;
           flex-direction: column;
-          gap: 1.2rem;
+          gap: 1.4rem;
           background: #fafbfc;
         }
         .admin-bubble-wrapper {
           display: flex;
           gap: 0.75rem;
-          max-width: 80%;
+          max-width: 72%;
+          min-width: 260px;
+        }
+        @media (max-width: 600px) {
+          .admin-bubble-wrapper {
+            max-width: 92%;
+            min-width: 0;
+          }
+          .admin-messages-list {
+            padding: 1rem 0.75rem;
+          }
+          .admin-reply-box {
+            padding: 0.75rem;
+            flex-wrap: wrap;
+          }
+          .admin-reply-input {
+            min-width: 0;
+          }
+          .btn-admin-reply {
+            width: 100%;
+          }
         }
         .msg-admin {
           align-self: flex-end;
@@ -638,6 +679,7 @@ const AdminFeedbackPage = () => {
         }
         .msg-user {
           align-self: flex-start;
+          padding-left: 0;
         }
         .bubble-avatar {
           width: 38px;
@@ -653,11 +695,13 @@ const AdminFeedbackPage = () => {
           flex-shrink: 0;
         }
         .admin-msg-bubble {
-          padding: 0.9rem 1.15rem;
+          padding: 0.9rem 1.25rem;
           border-radius: 16px;
-          font-size: 0.93rem;
-          line-height: 1.5;
+          font-size: 0.95rem;
+          line-height: 1.65;
           box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+          word-break: break-word;
+          overflow-wrap: anywhere;
         }
         .admin-side {
           background: var(--color-primary, #2F9E9D);
