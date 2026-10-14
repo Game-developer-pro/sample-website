@@ -1444,7 +1444,7 @@ const QuestionsPage = () => {
                 </div>
               </div>
               <div style={{ fontSize: "1.5rem", fontWeight: "800", color: "#38bdf8" }}>
-                ₦2,500 <span style={{ fontSize: "0.85rem", fontWeight: "500", color: "#94a3b8" }}>NGN</span>
+                ₦3,000 <span style={{ fontSize: "0.85rem", fontWeight: "500", color: "#94a3b8" }}>NGN</span>
               </div>
             </div>
 
