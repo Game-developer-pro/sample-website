@@ -194,21 +194,28 @@ const NewsFeedPage = () => {
           <div className="comments-panel-body">
             <div className="comments-list">
               {activeAnnouncement.comments && activeAnnouncement.comments.length > 0 ? (
-                activeAnnouncement.comments.map((comment, index) => (
-                  <div key={index} className="comment-item">
-                    <p className="comment-author">{comment.user?.name || "Student"}</p>
-                    <p className="comment-text">{comment.text}</p>
-                    {(user?.role === "admin" || (user && comment.user?._id === user.id)) && (
-                      <button 
-                        onClick={() => handleDeleteComment(activeAnnouncement._id, comment._id)} 
-                        className="comment-delete-btn"
-                        title="Delete comment"
-                      >
-                        
-                      </button>
-                    )}
-                  </div>
-                ))
+                activeAnnouncement.comments.map((comment, index) => {
+                  const commentUserId = comment.user?._id || comment.user?.id || (typeof comment.user === "string" ? comment.user : null);
+                  const currentUserId = user?._id || user?.id;
+                  const canDelete = user?.role === "admin" || (Boolean(currentUserId) && Boolean(commentUserId) && String(currentUserId) === String(commentUserId));
+
+                  return (
+                    <div key={comment._id || index} className="comment-item">
+                      <p className="comment-author">{comment.user?.name || "Student"}</p>
+                      <p className="comment-text">{comment.text}</p>
+                      {canDelete && (
+                        <button 
+                          onClick={() => handleDeleteComment(activeAnnouncement._id, comment._id)} 
+                          className="comment-delete-btn"
+                          title="Delete comment"
+                          aria-label="Delete comment"
+                        >
+                          🗑 Delete
+                        </button>
+                      )}
+                    </div>
+                  );
+                })
               ) : (
                 <p className="text-center text-muted" style={{ marginTop: "2rem" }}>
                   No comments yet. Be the first!

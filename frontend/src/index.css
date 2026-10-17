@@ -2201,21 +2201,28 @@ button {
 
 .comment-delete-btn {
   position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  background: transparent;
-  border: none;
+  top: 0.6rem;
+  right: 0.6rem;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.25);
   cursor: pointer;
-  color: hsl(var(--text-muted));
-  font-size: 1rem;
-  padding: 0.2rem;
-  border-radius: 50%;
-  transition: background 0.2s, color 0.2s;
+  color: #ef4444;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-sm, 6px);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: all 0.2s ease;
+  line-height: 1;
 }
 
 .comment-delete-btn:hover {
-  background: rgba(225, 29, 72, 0.1);
-  color: var(--color-danger);
+  background: #ef4444;
+  color: #ffffff;
+  border-color: #ef4444;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.35);
 }
 
 .add-comment-box {
@@ -3248,7 +3255,7 @@ button {
   padding: 0.5rem 1.2rem;
   border-radius: 50px;
   font-weight: 600;
-  cursor: pointer;
+  cursor: pointer; 
 }
 
 .btn-comment-submit:disabled {
@@ -3257,14 +3264,14 @@ button {
   cursor: not-allowed;
 }
 
-.comment-item {
+.comments-scroll-area .comment-item {
   display: flex;
   gap: 1rem;
   margin-bottom: 1.5rem;
   position: relative;
 }
 
-.comment-item:hover .comment-delete-btn {
+.comments-scroll-area .comment-item:hover .comment-delete-btn {
   opacity: 1;
 }
 
@@ -3290,17 +3297,18 @@ button {
   line-height: 1.5;
 }
 
-.comment-delete-btn {
+.comments-scroll-area .comment-delete-btn {
   background: none;
   border: none;
   color: #ef4444;
   cursor: pointer;
-  opacity: 0;
+  opacity: 0.7;
   transition: opacity 0.2s;
   padding: 0.5rem;
 }
 
-.comment-delete-btn:hover {
+.comments-scroll-area .comment-delete-btn:hover {
+  opacity: 1;
   transform: scale(1.2);
 }
 

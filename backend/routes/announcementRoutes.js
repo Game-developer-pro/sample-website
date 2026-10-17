@@ -119,7 +119,11 @@ router.delete("/:id/comment/:commentId", protect, async (req, res) => {
     }
 
     // Check authorization: must be comment author or admin
-    if (comment.user.toString() !== req.user.id && req.user.role !== "admin") {
+    const currentUserId = (req.user?.id || req.user?._id || "").toString();
+    const commentAuthorId = (comment.user?._id || comment.user || "").toString();
+    const isAdmin = req.user?.role === "admin";
+
+    if (!isAdmin && (!currentUserId || currentUserId !== commentAuthorId)) {
       return res.status(403).json({ message: "Not authorized to delete this comment" });
     }
 
