@@ -2053,12 +2053,12 @@ button {
   cursor: pointer;
   font-size: 1.1rem;
   padding: 0.3rem;
-  border-radius: 50%;
+  border-radius: 5%;
   transition: background 0.2s;
 }
 
 .feed-delete-btn:hover {
-  background: rgba(225, 29, 72, 0.1);
+  background: rgba(225, 29, 29, 0.1);
 }
 
 /* Card Image */
