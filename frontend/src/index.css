@@ -54,7 +54,7 @@ button {
   transition: var(--transition-smooth);
 }
 .feedback-empty-sidebar {
-  margin-left: 2%
+  margin-left: 3%
 }
 
 /* Loader Styles */
