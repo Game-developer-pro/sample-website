@@ -95,14 +95,7 @@ const Navbar = () => {
               >
                 Feedback
               </Link>
-              {user.role === "admin" && (
-                <Link
-                  to="/add-question"
-                  className={`nav-item admin-badge ${isActive("/add-question") ? "active" : ""}`}
-                >
-                  Add Question
-                </Link>
-              )}
+
               {user.role === "admin" && (
                 <Link
                   to="/admin/feedback"
