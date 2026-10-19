@@ -182,7 +182,7 @@ const CorrectionsPage = () => {
                 color: "#fff",
                 whiteSpace: "nowrap"
               }}>
-                {currentCorr.isCorrect ? "✓ You got this right" : "✗ You got this wrong"}
+                {currentCorr.isCorrect ? "You got this right" : "You got this wrong"}
               </span>
               <span className="badge-category">{currentCorr.subject}</span>
             </div>
@@ -244,10 +244,10 @@ const CorrectionsPage = () => {
           {/* Actions */}
           <div className="exam-card-actions" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "2rem" }}>
             <button onClick={handlePrev} className="btn-action-prev" disabled={currentIndex === 0}>
-              ← Previous
+              Previous
             </button>
             <button onClick={handleNext} className="btn-action-next" disabled={currentIndex === corrections.length - 1}>
-              Next →
+              Next
             </button>
           </div>
 
@@ -263,7 +263,7 @@ const CorrectionsPage = () => {
                 {aiLoading[currentIndex] ? (
                   <><span className="ai-spinner"></span> Connecting to AI...</>
                 ) : (
-                  <>&#x1F916; Explain This with AI</>
+                  <>Explain This with AI</>
                 )}
               </button>
             )}
@@ -272,7 +272,7 @@ const CorrectionsPage = () => {
             {aiStreaming[currentIndex] !== undefined && !aiExplanations[currentIndex] && (
               <div className="ai-explanation-panel">
                 <div className="ai-explanation-header">
-                  <span>&#x1F916; AI Explanation <span className="ai-stream-cursor">▌</span></span>
+                  <span>AI Explanation <span className="ai-stream-cursor">▌</span></span>
                 </div>
                 <div className="ai-explanation-body markdown-body" style={{ whiteSpace: "pre-wrap" }}>
                   {aiStreaming[currentIndex]}
@@ -284,7 +284,7 @@ const CorrectionsPage = () => {
             {aiExplanations[currentIndex] && (
               <div className="ai-explanation-panel">
                 <div className="ai-explanation-header">
-                  <span>&#x1F916; AI Explanation</span>
+                  <span>AI Explanation</span>
                   <button
                     className="ai-regen-btn"
                     onClick={() => {
@@ -292,7 +292,7 @@ const CorrectionsPage = () => {
                       setAiStreaming(prev => { const n = {...prev}; delete n[currentIndex]; return n; });
                     }}
                   >
-                    ↺ Regenerate
+                    Regenerate
                   </button>
                 </div>
                 <div className="ai-explanation-body markdown-body">
