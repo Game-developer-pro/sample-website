@@ -194,7 +194,8 @@ const DashboardPage = () => {
                   border: "1px solid hsla(var(--primary), 0.3)",
                   display: "inline-flex",
                   alignItems: "center",
-                  gap: "0.25rem"
+                  gap: "0.25rem",
+                  marginLeft: "20px"
                 }}>
                   <IconTrophy size="1em" color="hsl(var(--primary))" style={{ marginRight: "0.25rem" }} /> Leaderboard &rarr;
                 </span>
