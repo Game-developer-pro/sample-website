@@ -134,8 +134,8 @@ button {
 }
 
 .nav-brand-logo {
-  width: 32px;
-  height: 32px;
+  width: 35px;
+  height: 35px;
   border-radius: 8px;
   object-fit: contain;
   filter: drop-shadow(0 2px 6px rgba(59, 130, 246, 0.4));
