@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background rounded square gradient -->
+    <linearGradient id="eq-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0f2c" />
+      <stop offset="50%" stop-color="#141c48" />
+      <stop offset="100%" stop-color="#1e1548" />
+    </linearGradient>
+
+    <!-- Crest Shield Gradient -->
+    <linearGradient id="eq-shield" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563eb" />
+      <stop offset="50%" stop-color="#3b82f6" />
+      <stop offset="100%" stop-color="#06b6d4" />
+    </linearGradient>
+
+    <!-- Shield Inner Glow -->
+    <linearGradient id="eq-shield-inner" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1d4ed8" />
+      <stop offset="100%" stop-color="#0e172a" />
+    </linearGradient>
+
+    <!-- Golden Lighting & Star Gradient -->
+    <linearGradient id="eq-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fde047" />
+      <stop offset="45%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#d97706" />
+    </linearGradient>
+
+    <!-- Graduation Cap / Book Accent -->
+    <linearGradient id="eq-accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#818cf8" />
+    </linearGradient>
+
+    <!-- Soft Drop Shadow Filter -->
+    <filter id="eq-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Base App Icon Container (Modern Squircle) -->
+  <rect width="512" height="512" rx="112" fill="url(#eq-bg)" />
+  <rect width="504" height="504" x="4" y="4" rx="108" fill="none" stroke="url(#eq-shield)" stroke-width="4" stroke-opacity="0.3" />
+
+  <!-- Subtle Quest Compass Grid Rings -->
+  <circle cx="256" cy="256" r="190" fill="none" stroke="#38bdf8" stroke-width="2" stroke-opacity="0.12" stroke-dasharray="8 8" />
+  <circle cx="256" cy="256" r="140" fill="none" stroke="#818cf8" stroke-width="1.5" stroke-opacity="0.1" />
+
+  <!-- Central Shield Crest (Excellence & Academic Armor) -->
+  <path d="M 256 96 
+           C 340 96 380 120 380 160 
+           C 380 270 320 350 256 394 
+           C 192 350 132 270 132 160 
+           C 132 120 172 96 256 96 Z" 
+        fill="url(#eq-shield)" 
+        filter="url(#eq-glow)" />
+
+  <path d="M 256 112 
+           C 328 112 362 133 362 168 
+           C 362 260 310 330 256 372 
+           C 202 330 150 260 150 168 
+           C 150 133 184 112 256 112 Z" 
+        fill="url(#eq-shield-inner)" />
+
+  <!-- Open Book of Knowledge Base in Shield -->
+  <path d="M 190 295 
+           C 220 282 245 285 256 295 
+           C 267 285 292 282 322 295 
+           L 322 308 
+           C 292 295 267 298 256 308 
+           C 245 298 220 295 190 308 Z" 
+        fill="url(#eq-accent)" />
+
+  <!-- Graduation Cap (The Pinnacle) -->
+  <!-- Cap Rhombus -->
+  <polygon points="256,145 340,180 256,215 172,180" fill="url(#eq-accent)" />
+  <!-- Cap Base Under -->
+  <path d="M 205 198 L 205 228 C 205 248 307 248 307 228 L 307 198 Z" fill="#0284c7" opacity="0.9" />
+  <!-- Cap Tassel -->
+  <path d="M 326 190 L 334 235" stroke="#fde047" stroke-width="4" stroke-linecap="round" />
+  <circle cx="334" cy="238" r="5" fill="#f59e0b" />
+
+  <!-- High-Energy Lightning Bolt of Speed & CBT Quest -->
+  <polygon points="266,192 226,268 258,268 244,342 292,254 260,254" 
+           fill="url(#eq-gold)" 
+           filter="url(#eq-glow)" />
+
+  <!-- Academic Star Sparks (Waec/Jamb High Achievers) -->
+  <path d="M 370 120 Q 370 132 382 132 Q 370 132 370 144 Q 370 132 358 132 Q 370 132 370 120 Z" fill="#fde047" />
+  <path d="M 142 124 Q 142 134 152 134 Q 142 134 142 144 Q 142 134 132 134 Q 142 134 142 124 Z" fill="#38bdf8" />
+  <path d="M 256 422 Q 256 430 264 430 Q 256 430 256 438 Q 256 430 248 430 Q 256 430 256 422 Z" fill="#fde047" />
+</svg>

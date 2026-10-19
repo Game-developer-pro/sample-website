@@ -46,7 +46,8 @@ const Navbar = () => {
     <nav className="glass-navbar">
         <div className="nav-container" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <Link to={user ? "/dashboard" : "/"} className="nav-brand-glow">
-             Exam Quest
+            <img src="/logo.svg" alt="Exam Quest Logo" className="nav-brand-logo" />
+            <span>Exam Quest</span>
           </Link>
           
           {/* Hamburger Menu Icon */}
