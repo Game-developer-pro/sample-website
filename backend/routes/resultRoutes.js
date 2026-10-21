@@ -8,6 +8,20 @@ const router = express.Router();
 // ✅ Save test result
 router.post("/", authenticateToken, async (req, res) => {
   try {
+    //
+     Security Paywall Gate: Only paid users or admins can record full exam results
+    const currentUser = await User.findById(req.user.id).select("isPaid role");
+    if (!currentUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (!currentUser.isPaid && currentUser.role !== "admin") {
+      return res.status(402).json({
+        message: "Lifetime access required to submit and record full exam results. Please unlock your account to continue.",
+        requiresPayment: true
+      });
+    }
+
     const { testName, score, totalQuestions, examType, jambScore, breakdown, corrections } = req.body;
 
     const newResult = await Result.create({
