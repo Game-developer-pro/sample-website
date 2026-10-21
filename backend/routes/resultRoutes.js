@@ -8,8 +8,7 @@ const router = express.Router();
 // ✅ Save test result
 router.post("/", authenticateToken, async (req, res) => {
   try {
-    //
-     Security Paywall Gate: Only paid users or admins can record full exam results
+    // Security Paywall Gate: Only paid users or admins can record full exam results
     const currentUser = await User.findById(req.user.id).select("isPaid role");
     if (!currentUser) {
       return res.status(404).json({ message: "User not found" });
