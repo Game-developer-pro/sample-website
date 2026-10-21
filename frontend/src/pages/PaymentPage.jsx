@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { AuthContext, api } from "../context/AuthContext";
 import "../custom-theme.css";
-import { IconStar, IconCheckCircle, IconGlobe, IconWarning, IconLock } from "../components/Icons";
 
 const PaymentPage = () => {
   const { user, updateUser, loading: authLoading } = useContext(AuthContext);
@@ -13,21 +12,14 @@ const PaymentPage = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  // currencyOverride: user can type any ISO 4217 code (e.g. "USD", "GBP")
-  const [currencyOverride, setCurrencyOverride] = useState("");
-  const [currencyInput, setCurrencyInput] = useState(""); // controlled input value
 
-  // Fetch pricing — backend auto-detects currency from user IP.
-  // currencyOverride lets user manually switch to any ISO 4217 code.
+  // Fetch payment configuration directly
   useEffect(() => {
     const fetchConfig = async () => {
       setLoadingConfig(true);
       setErrorMessage("");
       try {
-        const url = currencyOverride
-          ? `/payment/config?currency=${currencyOverride.toUpperCase()}`
-          : "/payment/config";
-        const res = await api.get(url);
+        const res = await api.get("/payment/config");
         setPaymentConfig(res.data);
       } catch (err) {
         console.error("Failed to load payment config:", err);
@@ -38,18 +30,7 @@ const PaymentPage = () => {
     };
 
     fetchConfig();
-  }, [currencyOverride]);
-
-  const handleCurrencyApply = () => {
-    const trimmed = currencyInput.trim().toUpperCase();
-    if (trimmed.length === 3) {
-      setCurrencyOverride(trimmed);
-    } else if (trimmed === "") {
-      setCurrencyOverride(""); // reset to auto-detected
-    } else {
-      setErrorMessage("Please enter a valid 3-letter currency code, e.g. USD, GBP, GHS.");
-    }
-  };
+  }, []);
 
   // Helper to ensure Paystack script is loaded in DOM
   const loadPaystackScript = () => {
@@ -208,15 +189,6 @@ const PaymentPage = () => {
 
         {/* Heading */}
         <div style={{ textAlign: "center", marginBottom: "2rem" }}>
-          <div
-            style={{
-              display: "inline-block",
-              fontSize: "2.5rem",
-              marginBottom: "0.5rem",
-            }}
-          >
-            <IconStar size="2.5rem" color="#fbbf24" />
-          </div>
           <h1 style={{ fontSize: "2rem", marginBottom: "0.5rem", color: "var(--text-main)" }}>
             Unlock Lifetime CBT Access
           </h1>
@@ -240,7 +212,7 @@ const PaymentPage = () => {
               marginBottom: "2rem",
             }}
           >
-            <IconCheckCircle size="1.1em" color="#10b981" style={{ marginRight: "0.4rem" }} /> You already have Lifetime Access! No further payment is needed.
+            You already have Lifetime Access! No further payment is needed.
           </div>
         ) : (
           <div
@@ -252,93 +224,14 @@ const PaymentPage = () => {
               marginBottom: "2rem",
             }}
           >
-            <h3 style={{ fontSize: "1rem", color: "#d97706", marginBottom: "0.4rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-              <IconWarning size="1em" color="#d97706" /> Trial Account Notice
+            <h3 style={{ fontSize: "1rem", color: "#d97706", marginBottom: "0.4rem" }}>
+              Trial Account Notice
             </h3>
             <p style={{ fontSize: "0.9rem", color: "var(--text-main)", margin: 0, lineHeight: "1.5" }}>
               Without unlocking, assessments will be restricted by a <strong>5-minute trial cutoff</strong> that pauses your exam and prompts for payment before you can finish or record your score.
             </p>
           </div>
         )}
-
-        {/* Auto-Detected Location & Currency Override */}
-        <div
-          style={{
-            background: "hsl(var(--bg-tertiary))",
-            padding: "1.2rem 1.5rem",
-            borderRadius: "12px",
-            marginBottom: "2rem",
-          }}
-        >
-          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: "1rem" }}>
-            <div>
-              <div style={{ fontSize: "0.8rem", color: "hsl(var(--text-muted))", fontWeight: "600", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                Auto-Detected Location
-              </div>
-              <div style={{ fontSize: "1.1rem", fontWeight: "700", color: "var(--text-main)", marginTop: "0.2rem" }}>
-                <IconGlobe size="1em" color="currentColor" style={{ marginRight: "0.3rem" }} /> {loadingConfig ? "Detecting..." : `${paymentConfig?.countryName || "International"} — ${paymentConfig?.currency}`}
-              </div>
-              {paymentConfig?.ratesAvailable === false && (
-                <div style={{ fontSize: "0.78rem", color: "#d97706", marginTop: "0.2rem", display: "flex", alignItems: "center", gap: "0.3rem" }}>
-                  <IconWarning size="0.9em" color="#d97706" /> Live rates unavailable — showing NGN default
-                </div>
-              )}
-            </div>
-
-            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
-              <label htmlFor="currency-input" style={{ fontSize: "0.85rem", color: "hsl(var(--text-muted))", fontWeight: "600", whiteSpace: "nowrap" }}>
-                Pay in another currency:
-              </label>
-              <input
-                id="currency-input"
-                type="text"
-                placeholder="e.g. USD, GBP, GHS"
-                maxLength={3}
-                value={currencyInput}
-                onChange={(e) => setCurrencyInput(e.target.value.toUpperCase())}
-                onKeyDown={(e) => e.key === "Enter" && handleCurrencyApply()}
-                style={{
-                  width: "110px",
-                  background: "#ffffff",
-                  border: "1px solid hsl(var(--border))",
-                  borderRadius: "8px",
-                  padding: "0.45rem 0.7rem",
-                  color: "var(--text-main)",
-                  fontWeight: "700",
-                  fontSize: "0.95rem",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.05em",
-                }}
-              />
-              <button
-                onClick={handleCurrencyApply}
-                style={{
-                  background: "hsl(var(--primary))",
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: "8px",
-                  padding: "0.45rem 0.9rem",
-                  fontSize: "0.85rem",
-                  fontWeight: "700",
-                  cursor: "pointer",
-                }}
-              >
-                Apply
-              </button>
-              {currencyOverride && (
-                <button
-                  onClick={() => { setCurrencyOverride(""); setCurrencyInput(""); }}
-                  style={{ background: "transparent", border: "none", color: "hsl(var(--text-muted))", fontSize: "0.82rem", cursor: "pointer", textDecoration: "underline" }}
-                >
-                  Reset to auto
-                </button>
-              )}
-            </div>
-          </div>
-          <div style={{ marginTop: "0.75rem", fontSize: "0.78rem", color: "hsl(var(--text-muted))" }}>
-            Supports 160+ currencies (ISO 4217). Rates are fetched live and cached hourly.
-          </div>
-        </div>
 
         {/* Price Card */}
         <div
@@ -372,7 +265,7 @@ const PaymentPage = () => {
           </div>
 
           {loadingConfig ? (
-            <div style={{ padding: "1.5rem", color: "hsl(var(--text-muted))" }}>Loading currency pricing...</div>
+            <div style={{ padding: "1.5rem", color: "hsl(var(--text-muted))" }}>Loading pricing...</div>
           ) : (
             <div>
               <div style={{ fontSize: "3rem", fontWeight: "800", color: "var(--text-main)", lineHeight: "1" }}>
@@ -400,17 +293,17 @@ const PaymentPage = () => {
               textAlign: "left",
             }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.9rem", color: "var(--text-main)" }}>
-              <span style={{ color: "hsl(var(--primary))", fontWeight: "bold" }}>✓</span> Unlimited CBT Practice Tests
+            <div style={{ fontSize: "0.9rem", color: "var(--text-main)" }}>
+              Unlimited CBT Practice Tests
             </div>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.9rem", color: "var(--text-main)" }}>
-              <span style={{ color: "hsl(var(--primary))", fontWeight: "bold" }}>✓</span> Zero 5-minute timeout interruptions
+            <div style={{ fontSize: "0.9rem", color: "var(--text-main)" }}>
+              Zero 5-minute timeout interruptions
             </div>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.9rem", color: "var(--text-main)" }}>
-              <span style={{ color: "hsl(var(--primary))", fontWeight: "bold" }}>✓</span> Full Solutions & Detailed Corrections
+            <div style={{ fontSize: "0.9rem", color: "var(--text-main)" }}>
+              Full Solutions & Detailed Corrections
             </div>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.9rem", color: "var(--text-main)" }}>
-              <span style={{ color: "hsl(var(--primary))", fontWeight: "bold" }}>✓</span> Access to Post-Exam Arcade Zone
+            <div style={{ fontSize: "0.9rem", color: "var(--text-main)" }}>
+              Access to Post-Exam Arcade Zone
             </div>
           </div>
         </div>
@@ -479,7 +372,7 @@ const PaymentPage = () => {
         )}
 
         <div style={{ textAlign: "center", marginTop: "1.2rem", fontSize: "0.8rem", color: "hsl(var(--text-muted))" }}>
-          <IconLock size="0.85em" color="hsl(var(--text-muted))" style={{ marginRight: "4px" }} /> Payments securely processed via Paystack. Supports Cards, Bank Transfer, USSD, and Mobile Money.
+          Payments securely processed via Paystack. Supports Cards, Bank Transfer, USSD, and Mobile Money.
         </div>
       </div>
     </div>

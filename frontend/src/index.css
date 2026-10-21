@@ -1,5 +1,4 @@
 /* Fonts are preloaded in index.html with font-display: swap for fast, non-blocking rendering */
-/* Light and dark mode variables removed. The app relies on custom-theme.css for the primary color palette and UI tokens. */
 
 
 /* --------------------------------------------------
@@ -113,11 +112,7 @@ button {
   }
 }
 
-/* --------------------------------------------------
-   Navbar Styling (Glassmorphism & Glow)
-   -------------------------------------------------- */
-
-/* Removed glassmorphism backdrop filter */
+/* Navbar Styles */
 
 .nav-container {
   width: 100%;

@@ -92,7 +92,6 @@ const DashboardPage = () => {
             <p>Select an option below to start your Computer Based Test or view statistics.</p>
           </div>
           <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
-            <div className="user-role-tag">{user.role} Account</div>
             {user.isPaid ? (
               <div
                 style={{
