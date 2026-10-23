@@ -88,7 +88,7 @@ const DashboardPage = () => {
         {/* Welcome Section */}
         <header className="welcome-banner">
           <div className="welcome-text">
-            <h1>Welcome, {user.name?.split(" ")[0]}!</h1>
+            <h1>Welcome, {user.name?.split(" ")[0]}</h1>
             <p>Select an option below to start your Computer Based Test or view statistics.</p>
           </div>
           <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>

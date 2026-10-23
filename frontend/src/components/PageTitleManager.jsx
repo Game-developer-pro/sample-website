@@ -2,22 +2,22 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 const ROUTE_TITLES = {
-  "/": "Login | Exam Quest",
-  "/register": "Create Account | Exam Quest",
-  "/dashboard": "Dashboard | Exam Quest",
-  "/questions": "Start CBT Test | Exam Quest",
-  "/results": "Results History | Exam Quest",
-  "/profile": "My Profile | Exam Quest",
-  "/news-feed": "News Feed & Updates | Exam Quest",
-  "/create-post": "Create Post | Exam Quest",
-  "/practicals": "Video Practicals | Exam Quest",
-  "/games": "Brain Games & Breaks | Exam Quest",
-  "/payment": "Subscription & Pricing | Exam Quest",
-  "/leaderboard": "Leaderboard | Exam Quest",
-  "/feedback": "Student Feedback | Exam Quest",
-  "/admin": "Admin Dashboard | Exam Quest",
-  "/admin/feedback": "Feedback Inbox | Admin | Exam Quest",
-  "/add-question": "Add Question | Admin | Exam Quest",
+  "/": "Login | CBT Nexus",
+  "/register": "Create Account | CBT Nexus",
+  "/dashboard": "Dashboard | CBT Nexus",
+  "/questions": "Start CBT Test | CBT Nexus",
+  "/results": "Results History | CBT Nexus",
+  "/profile": "My Profile | CBT Nexus",
+  "/news-feed": "News Feed & Updates | CBT Nexus",
+  "/create-post": "Create Post | CBT Nexus",
+  "/practicals": "Video Practicals | CBT Nexus",
+  "/games": "Brain Games & Breaks | CBT Nexus",
+  "/payment": "Subscription & Pricing | CBT Nexus",
+  "/leaderboard": "Leaderboard | CBT Nexus",
+  "/feedback": "Student Feedback | CBT Nexus",
+  "/admin": "Admin Dashboard | CBT Nexus",
+  "/admin/feedback": "Feedback Inbox | Admin | CBT Nexus",
+  "/add-question": "Add Question | Admin | CBT Nexus",
 };
 
 export default function PageTitleManager() {
@@ -30,9 +30,9 @@ export default function PageTitleManager() {
 
     if (!matchedTitle) {
       if (path.startsWith("/corrections/")) {
-        matchedTitle = "Test Corrections & Review | Exam Quest";
+        matchedTitle = "Test Corrections & Review | CBT Nexus";
       } else {
-        matchedTitle = "Exam Quest | CBT & WAEC Practice Platform";
+        matchedTitle = "CBT Nexus | CBT & WAEC Practice Platform";
       }
     }
 

@@ -172,7 +172,7 @@ const ChatWidget = () => {
           <div className="cw-header">
             <div className="cw-header-info">
               <div>
-                <div className="cw-header-title">Exam Quest Assistant</div>
+                <div className="cw-header-title">CBT Nexus Assistant</div>
                 <div className="cw-header-sub">Always here to help</div>
               </div>
             </div>
@@ -198,7 +198,7 @@ const ChatWidget = () => {
               <div className="cw-welcome">
                 <div className="cw-welcome-icon">✦</div>
                 <h3>Hi{user?.name ? `, ${user.name.split(" ")[0]}` : ""}! 👋</h3>
-                <p>I'm your Exam Quest assistant. Ask me anything about the platform or your studies.</p>
+                <p>I'm your CBT Nexus assistant. Ask me anything about the platform or your studies.</p>
                 <div className="cw-chips">
                   {QUICK_CHIPS.map((chip) => (
                     <button key={chip} className="cw-chip" onClick={() => sendMessage(chip)}>

@@ -160,7 +160,9 @@ app.use(cors({
     const cleanOrigin = origin.replace(/\/$/, "");
     const isAllowed = allowedOrigins.includes(cleanOrigin) ||
       cleanOrigin.endsWith(".vercel.app") ||
-      cleanOrigin === "https://exam-quest-frontend.vercel.app";
+      cleanOrigin === "https://exam-quest-frontend.vercel.app" ||
+      cleanOrigin === "https://cbtnexus.com" ||
+      cleanOrigin === "https://www.cbtnexus.com";
 
     if (isAllowed) {
       callback(null, true);

@@ -256,11 +256,11 @@ const FeedbackPage = () => {
                       className={`chat-bubble-row ${isAdmin ? "row-admin" : "row-user"}`}
                     >
                       <div className="chat-avatar">
-                        {isAdmin ? "ExamQuest Support (Admin)" : (msg.senderName?.[0] || "U")}
+                        {isAdmin ? "CBT Nexus Support (Admin)" : (msg.senderName?.[0] || "U")}
                       </div>
                       <div className={`chat-bubble ${isAdmin ? "bubble-admin" : "bubble-user"}`}>
                         <div className="bubble-sender-name">
-                          {isAdmin ? "ExamQuest Support (Admin)" : "You"}
+                          {isAdmin ? "CBT Nexus Support (Admin)" : "You"}
                           <span className="bubble-time">
                             {new Date(msg.createdAt).toLocaleTimeString([], {
                               hour: "2-digit",
