@@ -11,7 +11,15 @@ const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 // REGISTER USER
 router.post("/register", async (req, res) => {
   try {
-    const { name, username, email, password, role } = req.body;
+    const { name, firstName, lastName, username, email, password, confirmPassword, role } = req.body;
+
+    // Validate confirm password if sent
+    if (confirmPassword !== undefined && confirmPassword !== password) {
+      return res.status(400).json({ message: "Passwords do not match." });
+    }
+
+    // Determine full name from firstName/lastName or fallback to name
+    const computedName = [firstName, lastName].filter(Boolean).join(" ").trim() || (name ? name.trim() : "");
 
     // Check if user already exists
     const existingUser = await User.findOne({ email });
@@ -39,7 +47,9 @@ router.post("/register", async (req, res) => {
 
     // Create user
     const newUser = await User.create({
-      name,
+      name: computedName,
+      firstName: firstName ? firstName.trim() : undefined,
+      lastName: lastName ? lastName.trim() : undefined,
       username: username ? username.trim() : undefined,
       email,
       password: hashedPassword,

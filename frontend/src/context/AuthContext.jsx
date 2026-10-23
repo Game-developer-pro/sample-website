@@ -105,9 +105,15 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Register handler
-  const register = async (name, username, email, password, role = "user") => {
+  const register = async (nameOrPayload, username, email, password, role = "user") => {
     try {
-      const response = await api.post("/auth/register", { name, username, email, password, role });
+      let payload;
+      if (typeof nameOrPayload === "object" && nameOrPayload !== null) {
+        payload = nameOrPayload;
+      } else {
+        payload = { name: nameOrPayload, username, email, password, role };
+      }
+      const response = await api.post("/auth/register", payload);
       return { success: true, message: response.data.message };
     } catch (error) {
       console.error("Registration failed:", error);
