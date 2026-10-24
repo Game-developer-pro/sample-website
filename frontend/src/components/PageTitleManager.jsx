@@ -18,6 +18,8 @@ const ROUTE_TITLES = {
   "/admin": "Admin Dashboard | CBT Nexus",
   "/admin/feedback": "Feedback Inbox | Admin | CBT Nexus",
   "/add-question": "Add Question | Admin | CBT Nexus",
+  "/privacy": "Privacy Policy | CBT Nexus",
+  "/terms": "Terms of Use | CBT Nexus",
 };
 
 export default function PageTitleManager() {
