@@ -83,15 +83,15 @@ const ProfilePage = () => {
 
           <div className="form-group">
             <label>Username <span style={{ color: "hsl(var(--primary))", fontSize: "0.82rem" }}>(shown on leaderboard)</span></label>
-            <div style={{ position: "relative" }}>
-              <span style={{ position: "absolute", left: "0.75rem", top: "50%", transform: "translateY(-50%)", color: "hsl(var(--text-muted))", fontWeight: "700", pointerEvents: "none" }}>@</span>
+            <div className="username-input-wrapper">
+              <span className="username-input-prefix">@</span>
               <input
                 type="text"
+                className="username-prefix-input"
                 value={username}
                 onChange={(e) => setUsername(e.target.value.replace(/[^a-zA-Z0-9_]/g, ""))}
                 placeholder="e.g. jamb_king99"
                 maxLength={24}
-                style={{ paddingLeft: "2.2rem", width: "100%" }}
               />
             </div>
             <small style={{ color: "hsl(var(--text-muted))", fontSize: "0.78rem" }}>3–24 chars. Letters, numbers, underscores only. Leave blank to hide from leaderboard.</small>

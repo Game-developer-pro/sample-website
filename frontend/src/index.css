@@ -421,6 +421,33 @@ button {
   box-shadow: 0 0 0 3px hsla(var(--primary), 0.2);
 }
 
+.username-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.username-input-prefix {
+  position: absolute;
+  left: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: hsl(var(--primary));
+  font-weight: 700;
+  font-size: 1.05rem;
+  pointer-events: none;
+  z-index: 2;
+  user-select: none;
+}
+
+.form-group input.username-prefix-input,
+.username-prefix-input {
+  padding-left: 2.35rem !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
 .auth-name-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
