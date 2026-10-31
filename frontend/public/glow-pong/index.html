@@ -36,19 +36,20 @@
       justify-content: center;
     }
 
-    /* Screen Wrapper: fills 100% of viewport and scales/rotates perfectly on mobile */
+    /* Screen Wrapper: fills 100% of viewport naturally with flex column */
     .screen-wrapper {
-      position: absolute;
-      inset: 0;
+      position: relative;
       width: 100%;
       height: 100%;
+      max-width: 100%;
+      max-height: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
-      padding: 8px 12px;
+      padding: 10px 14px;
       overflow: hidden;
-      transform-origin: center center;
+      box-sizing: border-box;
     }
 
     .glow-orb {
@@ -65,16 +66,17 @@
       position: relative;
       z-index: 10;
       width: 100%;
-      max-width: 800px;
+      max-width: 860px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 6px;
       flex-shrink: 0;
+      margin-bottom: 4px;
     }
 
     .game-title {
-      font-size: clamp(0.95rem, 3vw, 1.3rem);
+      font-size: clamp(0.95rem, 3.5vw, 1.3rem);
       font-weight: 900;
       background: linear-gradient(90deg, var(--p1-color), var(--p2-color));
       -webkit-background-clip: text;
@@ -106,6 +108,7 @@
       font-size: 0.72rem;
       font-weight: 700;
       transition: all 0.2s;
+      white-space: nowrap;
     }
     .mode-btn.active {
       background: linear-gradient(135deg, var(--p1-color), #0055ff);
@@ -123,7 +126,7 @@
       display: flex;
       align-items: center;
       gap: 20px;
-      margin: 2px 0;
+      margin: 2px 0 6px;
       flex-shrink: 0;
     }
 
@@ -132,7 +135,7 @@
       min-width: 50px;
     }
     .score-label {
-      font-size: 0.6rem;
+      font-size: 0.65rem;
       font-weight: 800;
       letter-spacing: 1px;
       text-transform: uppercase;
@@ -142,7 +145,7 @@
     .p2-label { color: var(--p2-color); }
 
     .score-num {
-      font-size: clamp(1.4rem, 4.5vw, 2.2rem);
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
       font-weight: 900;
       line-height: 1;
       text-shadow: 0 0 16px currentColor;
@@ -151,7 +154,7 @@
     .p2-score { color: var(--p2-color); }
 
     .score-divider {
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       font-weight: 900;
       color: #475569;
     }
@@ -159,14 +162,15 @@
     .canvas-container {
       position: relative;
       z-index: 5;
-      flex: 1;
+      flex: 1 1 0;
       width: 100%;
       max-width: 860px;
       min-height: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 2px 0;
+      margin: 4px 0;
+      overflow: hidden;
     }
 
     canvas {
@@ -178,7 +182,9 @@
       width: 100%;
       height: 100%;
       max-height: 100%;
+      max-width: 100%;
       object-fit: contain;
+      aspect-ratio: 16 / 10;
     }
 
     .game-overlay {
@@ -230,6 +236,7 @@
       z-index: 15;
       pointer-events: none;
       animation: pulseServe 1.2s infinite alternate;
+      white-space: nowrap;
     }
     @keyframes pulseServe {
       0% { transform: translateX(-50%) scale(0.97); opacity: 0.85; }
@@ -267,6 +274,7 @@
       flex-wrap: wrap;
       text-align: center;
       flex-shrink: 0;
+      margin-top: 4px;
     }
     .kbd-tag {
       background: rgba(255, 255, 255, 0.08);
@@ -288,6 +296,32 @@
       font-size: 0.68rem;
       font-weight: 700;
       color: #fff;
+    }
+
+    @media (max-width: 600px) {
+      .screen-wrapper {
+        padding: 6px 8px;
+      }
+      .top-bar {
+        margin-bottom: 2px;
+      }
+      .mode-btn {
+        padding: 3px 7px;
+        font-size: 0.65rem;
+      }
+      .score-num {
+        font-size: 1.5rem;
+      }
+      .scoreboard {
+        gap: 12px;
+        margin: 0 0 4px;
+      }
+      .bottom-bar {
+        display: none;
+      }
+      canvas {
+        border-radius: 8px;
+      }
     }
   </style>
 </head>
@@ -393,34 +427,19 @@
     const paddleWidth = 14;
     const paddleHeight = 90;
 
-    let isPortraitRotated = false;
-
-    function applyScreenRotation() {
-      const winW = window.innerWidth;
-      const winH = window.innerHeight;
-
-      if (winW < 768 && winH > winW) {
-        isPortraitRotated = true;
-        wrapper.style.position = 'absolute';
-        wrapper.style.width = winH + 'px';
-        wrapper.style.height = winW + 'px';
-        wrapper.style.transform = 'rotate(90deg)';
-        wrapper.style.top = ((winH - winW) / 2) + 'px';
-        wrapper.style.left = ((winW - winH) / 2) + 'px';
-      } else {
-        isPortraitRotated = false;
-        wrapper.style.position = 'relative';
-        wrapper.style.width = '100%';
-        wrapper.style.height = '100%';
-        wrapper.style.transform = 'none';
-        wrapper.style.top = '0px';
-        wrapper.style.left = '0px';
-      }
+    function updateLayout() {
+      // Keep canvas container and wrapper sized to 100% of the active container
+      wrapper.style.position = 'relative';
+      wrapper.style.width = '100%';
+      wrapper.style.height = '100%';
+      wrapper.style.transform = 'none';
+      wrapper.style.top = '0px';
+      wrapper.style.left = '0px';
     }
 
-    window.addEventListener('resize', applyScreenRotation);
-    window.addEventListener('orientationchange', applyScreenRotation);
-    applyScreenRotation();
+    window.addEventListener('resize', updateLayout);
+    window.addEventListener('orientationchange', updateLayout);
+    updateLayout();
 
     const p1 = {
       x: 30,
@@ -568,36 +587,42 @@
       }
     });
 
-    // Touch & Pointer Drag controls with automatic rotation adaptation
-    function handleTouch(e) {
+    // Touch & Pointer Drag controls
+    function handlePointer(clientX, clientY) {
       if (!isPlaying || isPaused) return;
       const rect = canvas.getBoundingClientRect();
+      const canvasX = ((clientX - rect.left) / rect.width) * V_WIDTH;
+      const canvasY = ((clientY - rect.top) / rect.height) * V_HEIGHT;
 
-      for (let i = 0; i < e.touches.length; i++) {
-        const touch = e.touches[i];
-        let canvasX, canvasY;
-
-        if (isPortraitRotated) {
-          canvasX = ((touch.clientY - rect.top) / rect.height) * V_WIDTH;
-          canvasY = (1 - ((touch.clientX - rect.left) / rect.width)) * V_HEIGHT;
-        } else {
-          canvasX = ((touch.clientX - rect.left) / rect.width) * V_WIDTH;
-          canvasY = ((touch.clientY - rect.top) / rect.height) * V_HEIGHT;
+      if (canvasX < V_WIDTH / 2) {
+        p1.targetY = Math.max(0, Math.min(V_HEIGHT - p1.h, canvasY - p1.h / 2));
+        if (isServing && (serverPlayer === 1 || mode !== '2p')) {
+          triggerServe(1);
         }
-
-        if (canvasX < V_WIDTH / 2) {
-          p1.targetY = Math.max(0, Math.min(V_HEIGHT - p1.h, canvasY - p1.h / 2));
-          if (isServing && (serverPlayer === 1 || mode !== '2p')) {
-            triggerServe(1);
-          }
-        } else if (mode === '2p') {
-          p2.targetY = Math.max(0, Math.min(V_HEIGHT - p2.h, canvasY - p2.h / 2));
-          if (isServing && serverPlayer === 2) {
-            triggerServe(2);
-          }
+      } else if (mode === '2p') {
+        p2.targetY = Math.max(0, Math.min(V_HEIGHT - p2.h, canvasY - p2.h / 2));
+        if (isServing && serverPlayer === 2) {
+          triggerServe(2);
         }
       }
     }
+
+    function handleTouch(e) {
+      if (!isPlaying || isPaused) return;
+      for (let i = 0; i < e.touches.length; i++) {
+        handlePointer(e.touches[i].clientX, e.touches[i].clientY);
+      }
+    }
+
+    let isMouseDown = false;
+    window.addEventListener('mousedown', (e) => {
+      isMouseDown = true;
+      handlePointer(e.clientX, e.clientY);
+    });
+    window.addEventListener('mousemove', (e) => {
+      if (isMouseDown) handlePointer(e.clientX, e.clientY);
+    });
+    window.addEventListener('mouseup', () => { isMouseDown = false; });
 
     window.addEventListener('touchstart', handleTouch, { passive: true });
     window.addEventListener('touchmove', (e) => {
