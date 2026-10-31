@@ -2855,6 +2855,8 @@ button {
   left: 50%;
   transform: translateX(-50%);
   width: 280px;
+  max-width: 90vw;
+  box-sizing: border-box;
   background: rgba(30, 41, 59, 0.85); /* Dark slate glass */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -2864,6 +2866,25 @@ button {
   box-shadow: 0 20px 40px rgba(0,0,0,0.3);
   z-index: 100;
   animation: scaleIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@media (max-width: 768px) {
+  .calculator-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(320px, 88vw);
+    max-width: 88vw;
+    z-index: 1000;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75), 0 0 0 100vmax rgba(0, 0, 0, 0.5);
+    animation: scaleInMobile 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  @keyframes scaleInMobile {
+    0% { transform: translate(-50%, -45%) scale(0.92); opacity: 0; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  }
 }
 
 @keyframes scaleIn {
