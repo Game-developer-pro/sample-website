@@ -904,21 +904,32 @@ button {
   display: grid;
   grid-template-columns: 2.5fr 1fr;
   gap: 2rem;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 @media (max-width: 900px) {
   .exam-grid-container {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
 }
 
 .exam-main-panel {
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
 }
 
 .exam-card {
   padding: 2.5rem;
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @media (max-width: 768px) {
@@ -2648,6 +2659,10 @@ button {
   margin-top: 2rem;
   border-top: 1px dashed hsl(var(--border));
   padding-top: 1.5rem;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .btn-ai-explain {
@@ -2661,6 +2676,8 @@ button {
   border-radius: var(--radius-md);
   font-weight: 600;
   cursor: pointer;
+  max-width: 100%;
+  box-sizing: border-box;
   transition: transform 0.2s, box-shadow 0.2s;
   box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
 }
@@ -2701,6 +2718,10 @@ button {
   border: 1px solid #d8b4fe;
   border-radius: var(--radius-lg);
   overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   animation: slideDown 0.3s ease-out;
 }
 
@@ -2718,6 +2739,8 @@ button {
   align-items: center;
   font-weight: 700;
   color: #6b21a8;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 [data-theme="dark"] .ai-explanation-header {
@@ -2744,13 +2767,56 @@ button {
   font-size: 0.95rem;
   line-height: 1.6;
   color: hsl(var(--text-main));
-  overflow-wrap: break-word;
-  word-break: break-word;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   overflow-x: auto;
+  overflow-wrap: anywhere;
+  word-break: normal;
 }
 
 .ai-explanation-body p {
   margin-bottom: 0.8rem;
+  overflow-wrap: anywhere;
+}
+
+.ai-explanation-body pre,
+.ai-explanation-body code {
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.ai-explanation-body table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* KaTeX formula containment for mobile screens */
+.ai-explanation-body .katex-display {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.5rem 0;
+}
+
+.ai-explanation-body .katex {
+  max-width: 100%;
+  font-size: 1em;
+}
+
+@media (max-width: 600px) {
+  .ai-explanation-header {
+    padding: 0.65rem 0.9rem;
+    font-size: 0.9rem;
+  }
+  .ai-explanation-body {
+    padding: 0.9rem 0.75rem;
+    font-size: 0.9rem;
+  }
 }
 
 /* ============================================================
