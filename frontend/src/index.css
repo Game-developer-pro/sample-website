@@ -421,6 +421,19 @@ button {
   box-shadow: 0 0 0 3px hsla(var(--primary), 0.2);
 }
 
+.auth-name-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+@media (max-width: 540px) {
+  .auth-name-grid {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+}
+
 /* Role button selection system */
 .role-selector {
   display: grid;
@@ -2731,6 +2744,9 @@ button {
   font-size: 0.95rem;
   line-height: 1.6;
   color: hsl(var(--text-main));
+  overflow-wrap: break-word;
+  word-break: break-word;
+  overflow-x: auto;
 }
 
 .ai-explanation-body p {

@@ -198,7 +198,7 @@ const RegisterPage = () => {
         <div className="auth-divider">or register with email</div>
 
         <form onSubmit={handleSubmit} className="auth-form">
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
+          <div className="auth-name-grid">
             <div className="form-group" style={{ marginBottom: 0 }}>
               <label>First Name</label>
               <input
