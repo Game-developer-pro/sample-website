@@ -82,6 +82,13 @@ router.get("/leaderboard", async (req, res) => {
         },
       },
       { $unwind: "$user" },
+      // Only include users who have a non-empty username
+      {
+        $match: {
+          "user.username": { $exists: true, $ne: null, $type: "string" },
+          $expr: { $gt: [{ $strLenCP: { $trim: { input: "$user.username" } } }, 0] }
+        }
+      },
       {
         $project: {
           _id: 0,
@@ -89,9 +96,9 @@ router.get("/leaderboard", async (req, res) => {
           username: "$user.username",
           name: "$user.name",
           avatar: "$user.avatar",
-          avgJambScore: { $round: ["$avgJambScore", 1] },
+          avgJambScore: { $round: ["$avgJambScore", 0] },
           totalTests: 1,
-          bestScore: 1,
+          bestScore: { $round: ["$bestScore", 0] },
           lastTested: 1,
         },
       },

@@ -38,7 +38,14 @@ const LeaderboardPage = () => {
     const loadData = async () => {
       try {
         const res = await api.get("/results/leaderboard");
-        setEntries(res.data || []);
+        const validEntries = (res.data || [])
+          .filter(e => e.username && typeof e.username === 'string' && e.username.trim().length > 0)
+          .map(e => ({
+            ...e,
+            avgJambScore: Math.round(Number(e.avgJambScore) || 0),
+            bestScore: Math.round(Number(e.bestScore) || 0)
+          }));
+        setEntries(validEntries);
         if (user) {
           const idx = res.data.findIndex((e) => String(e.userId) === String(user._id));
           if (idx !== -1) setMyRank(idx + 1);
@@ -58,6 +65,10 @@ const LeaderboardPage = () => {
   return (
     <div className="leaderboard-page-container">
       <style>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
         .leaderboard-page-container {
           min-height: 100vh;
           padding: 1.5rem 1rem 4rem;
@@ -256,7 +267,7 @@ const LeaderboardPage = () => {
                   <div style={{ fontWeight: "700", fontSize: rank === 1 ? "0.86rem" : "0.78rem", color: "var(--text-main)", width: "100%", textAlign: "center", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                     {displayName(entry)}
                   </div>
-                  <ScoreBadge score={entry.avgJambScore} />
+                  <ScoreBadge score={Math.round(Number(entry.avgJambScore) || 0)} />
                   <div className="podium-pillar" style={{
                     height: podiumHeights[i],
                     background: `linear-gradient(180deg, ${c.text}22, ${c.text}08)`,
@@ -324,12 +335,12 @@ const LeaderboardPage = () => {
                     </div>
                   </div>
 
-                  <div style={{ textAlign: "right" }}><ScoreBadge score={entry.avgJambScore} /></div>
+                  <div style={{ textAlign: "right" }}><ScoreBadge score={Math.round(Number(entry.avgJambScore) || 0)} /></div>
                   <div style={{ textAlign: "right", fontWeight: "600", color: "hsl(var(--text-muted))", fontSize: "0.82rem" }}>
                     {entry.totalTests}×
                   </div>
                   <div className="col-hide-mobile" style={{ textAlign: "right", fontWeight: "600", color: "hsl(var(--text-muted))", fontSize: "0.82rem" }}>
-                    {entry.bestScore}
+                    {Math.round(Number(entry.bestScore) || 0)}
                   </div>
                 </div>
               );
